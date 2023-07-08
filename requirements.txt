@@ -1,0 +1,7 @@
+streamlit
+supabase
+openai
+langchain
+plotly
+fpdf
+
