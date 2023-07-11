@@ -2,19 +2,26 @@ import os
 from os.path import exists
 import streamlit as st
 
+from supabase import create_client, Client
+
+from streamlit_app import local_test
+
+if local_test == True:
+    from apikeys import supabase_url, supabase_key, openaikey
+else:
+    openaikey = st.secrets['OPENAI_API_KEY']
+    supabase_url = st.secrets['supabase_url']
+    supabase_key = st.secrets['supabase_key']
 
 ########### Database ###########
 
-from supabase import create_client, Client
 # API Key Codes - Replace w. Streamlit Secrets
-from apikeys import supabase_url, supabase_key
 supabase: Client = create_client(supabase_url, supabase_key)
 
 
 # Langchain and OPENAI
 
 #LLM
-from apikeys import openaikey
 from langchain.llms import OpenAI
 
 #Langchain Features
@@ -25,10 +32,12 @@ os.environ['OPENAI_API_KEY'] = openaikey
 
 llm = OpenAI(temperature=0.4)
 
+#_______________________________________
+
+# Init Variables
 run_chain = False
 all_deets = 0
 
-#_______________________________________
 #AI STUFF ABOVE
 
 st.header("Message Writer")

@@ -2,8 +2,17 @@ import os
 import streamlit as st
 from supabase import create_client, Client
 
+local_test = True
+
 # API Key Codes - Replace w. Streamlit Secrets
-from apikeys import supabase_url, supabase_key, openaikey
+
+if local_test == True:
+    from apikeys import supabase_url, supabase_key, openaikey
+else:
+    openaikey = st.secrets['OPENAI_API_KEY']
+    supabase_url = st.secrets['supabase_url']
+    supabase_key = st.secrets['supabase_key']
+
 
 # Session User
 userEmail = st.experimental_user.email
